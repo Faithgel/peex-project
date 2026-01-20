@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'peex-project'
+    environment: 'dev'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - localhost:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alerts.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Sample application
+  - job_name: 'sample-app'
+    static_configs:
+      - targets: ['localhost:8080']  # Will be updated with actual IP
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # Node exporter (if installed)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']

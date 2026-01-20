@@ -1,0 +1,18 @@
+# AWS Configuration
+aws_region = "us-east-1"
+environment = "dev"
+project_name = "peex-project"
+
+# Network Configuration
+vpc_cidr = "10.0.0.0/16"
+
+# Instance Types (Free Tier eligible: t3.micro)
+# Override these if you need more resources (e.g., t3.small, t3.medium)
+instance_type = "t3.micro"
+prometheus_instance_type = "t3.micro"
+grafana_instance_type = "t3.micro"
+app_instance_type = "t3.micro"
+
+# Security Configuration
+allowed_cidr_blocks = []  # Add your IP CIDR blocks if needed
+enable_ssh_access = false  # Set to false - use Session Manager instead

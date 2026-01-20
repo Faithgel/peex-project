@@ -1,0 +1,321 @@
+{
+  "name": "Peex Project Alert Rules",
+  "interval": "30s",
+  "rules": [
+    {
+      "uid": "high-cpu-usage",
+      "title": "High CPU Usage",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "100 - (avg by(instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100) > 80",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "High CPU usage detected",
+        "description": "CPU usage is above 80% on {{ $labels.instance }} for more than 5 minutes"
+      },
+      "labels": {
+        "severity": "warning",
+        "component": "infrastructure",
+        "alertname": "HighCPUUsage"
+      }
+    },
+    {
+      "uid": "high-memory-usage",
+      "title": "High Memory Usage",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "High memory usage detected",
+        "description": "Memory usage is above 85% on {{ $labels.instance }}"
+      },
+      "labels": {
+        "severity": "warning",
+        "component": "infrastructure",
+        "alertname": "HighMemoryUsage"
+      }
+    },
+    {
+      "uid": "disk-space-low",
+      "title": "Low Disk Space",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "(node_filesystem_avail_bytes{mountpoint=\"/\"} / node_filesystem_size_bytes{mountpoint=\"/\"}) * 100 < 15",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "Low disk space",
+        "description": "Disk space is below 15% on {{ $labels.instance }}"
+      },
+      "labels": {
+        "severity": "critical",
+        "component": "infrastructure",
+        "alertname": "DiskSpaceLow"
+      }
+    },
+    {
+      "uid": "high-error-rate",
+      "title": "High Error Rate",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "rate(sample_app_errors_total[5m]) > 0.1",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "3m",
+      "annotations": {
+        "summary": "High error rate detected",
+        "description": "Error rate is {{ $value }} errors/sec on {{ $labels.instance }}"
+      },
+      "labels": {
+        "severity": "critical",
+        "component": "application",
+        "alertname": "HighErrorRate"
+      }
+    },
+    {
+      "uid": "high-request-duration",
+      "title": "High Request Duration",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "histogram_quantile(0.95, rate(sample_app_request_duration_seconds_bucket[5m])) > 2",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "High request duration",
+        "description": "95th percentile request duration is {{ $value }}s on {{ $labels.instance }}"
+      },
+      "labels": {
+        "severity": "warning",
+        "component": "application",
+        "alertname": "HighRequestDuration"
+      }
+    },
+    {
+      "uid": "no-metrics-received",
+      "title": "No Metrics Received",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "absent(sample_app_requests_total[5m])",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "No metrics received from application",
+        "description": "Application {{ $labels.instance }} is not sending metrics"
+      },
+      "labels": {
+        "severity": "critical",
+        "component": "application",
+        "alertname": "NoMetricsReceived"
+      }
+    },
+    {
+      "uid": "high-order-processing-time",
+      "title": "High Order Processing Time",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "histogram_quantile(0.95, rate(sample_app_processing_time_seconds_bucket[5m])) > 1",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "5m",
+      "annotations": {
+        "summary": "High order processing time",
+        "description": "95th percentile order processing time is {{ $value }}s"
+      },
+      "labels": {
+        "severity": "warning",
+        "component": "business_metrics",
+        "alertname": "HighOrderProcessingTime"
+      }
+    },
+    {
+      "uid": "low-active-users",
+      "title": "Low Active Users",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 600,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "sample_app_active_users < 5",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "10m",
+      "annotations": {
+        "summary": "Low active users",
+        "description": "Active users dropped to {{ $value }}"
+      },
+      "labels": {
+        "severity": "warning",
+        "component": "business_metrics",
+        "alertname": "LowActiveUsers"
+      }
+    },
+    {
+      "uid": "high-cpu-and-error-rate",
+      "title": "High CPU and Error Rate (Composite)",
+      "condition": "A",
+      "data": [
+        {
+          "refId": "A",
+          "relativeTimeRange": {
+            "from": 300,
+            "to": 0
+          },
+          "datasourceUid": "prometheus",
+          "model": {
+            "expr": "(100 - (avg by(instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100) > 75) AND (rate(sample_app_errors_total[5m]) > 0.05)",
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "prometheus"
+            }
+          }
+        }
+      ],
+      "noDataState": "NoData",
+      "execErrState": "Error",
+      "for": "3m",
+      "annotations": {
+        "summary": "Critical: High CPU and error rate",
+        "description": "Instance {{ $labels.instance }} has high CPU (>75%) and high error rate (>0.05/sec)"
+      },
+      "labels": {
+        "severity": "critical",
+        "component": "composite",
+        "alertname": "HighCPUAndErrorRate"
+      }
+    }
+  ]
+}
