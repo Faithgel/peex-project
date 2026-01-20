@@ -429,6 +429,47 @@ sudo systemctl status sample-app
 sudo journalctl -u sample-app -f
 ```
 
+## Proof of Work
+
+This section contains screenshots and evidence demonstrating the successful implementation of all project requirements.
+
+### Infrastructure as Code (Terraform)
+
+![Terraform Deployment](imgs/Capture-2026-01-20-104321.png)
+*Terraform infrastructure deployment and validation*
+
+![Terraform Configuration](imgs/Capture-2026-01-20-104427.png)
+*Terraform configuration files and state management*
+
+![Terraform Resources](imgs/Capture-2026-01-20-104447.png)
+*Terraform resources created and managed*
+
+![Terraform Output](imgs/Capture-2026-01-20-104458.png)
+*Terraform outputs showing instance IDs and access information*
+
+### Monitoring and Dashboards
+
+![Grafana Dashboard - Custom Metrics](imgs/Screenshot%202026-01-20%20at%2010.50.03%20AM.png)
+*Grafana dashboard showing custom business metrics (Orders, Users, Processing Time, Errors)*
+
+![Grafana Dashboard - Infrastructure Metrics](imgs/Screenshot%202026-01-20%20at%2010.50.56%20AM.png)
+*Grafana dashboard showing infrastructure metrics (CPU, Memory, Disk, Network)*
+
+![Prometheus and Alerts](imgs/Screenshot%202026-01-20%20at%2010.57.20%20AM.png)
+*Prometheus targets, metrics, and alert configuration*
+
+![Monitoring Stack](imgs/Screenshot%202026-01-20%20at%2010.57.58%20AM.png)
+*Complete monitoring stack with Prometheus and Grafana integration*
+
+---
+
+**Screenshots demonstrate:**
+- ✅ Successful Terraform deployments with all resources
+- ✅ Working Grafana dashboards with custom and infrastructure metrics
+- ✅ Prometheus successfully scraping application metrics
+- ✅ Alert configurations and monitoring setup
+- ✅ Infrastructure as Code validation and state management
+
 ## Key Commands
 
 ### Terraform

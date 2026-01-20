@@ -41,3 +41,8 @@ ENV/
 # Sensitive files
 secrets/
 *.secret
+
+# Documentation images (optional - uncomment if you want to exclude large images)
+# docs/images/*.png
+# docs/images/*.jpg
+# !docs/images/.gitkeep
