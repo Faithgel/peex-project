@@ -7,13 +7,12 @@ resource "aws_sns_topic" "alerts" {
   }
 }
 
-# SNS Subscription (email - update with your email)
-# Uncomment and configure with your email
-# resource "aws_sns_topic_subscription" "email" {
-#   topic_arn = aws_sns_topic.alerts.arn
-#   protocol  = "email"
-#   endpoint  = "your-email@example.com"
-# }
+# SNS Subscription (email)
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.alerts.arn
+  protocol  = "email"
+  endpoint  = "angelo.orellana.agui@gmail.com"
+}
 
 # Static Threshold Alert: High CPU Usage
 resource "aws_cloudwatch_metric_alarm" "high_cpu_prometheus" {
