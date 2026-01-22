@@ -461,14 +461,7 @@ This section contains screenshots and evidence demonstrating the successful impl
 ![Monitoring Stack](imgs/Screenshot%202026-01-20%20at%2010.57.58%20AM.png)
 *Complete monitoring stack with Prometheus and Grafana integration*
 
----
 
-**Screenshots demonstrate:**
-- ✅ Successful Terraform deployments with all resources
-- ✅ Working Grafana dashboards with custom and infrastructure metrics
-- ✅ Prometheus successfully scraping application metrics
-- ✅ Alert configurations and monitoring setup
-- ✅ Infrastructure as Code validation and state management
 
 ## Key Commands
 
